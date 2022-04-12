@@ -11,7 +11,8 @@ body {
 }
 
 body, html {
-    scroll-behavior: smooth
+    scroll-behavior: smooth;
+    overflow-x: hidden;
 }
 
 @tailwind base;
