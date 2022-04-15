@@ -132,7 +132,7 @@ const CreateContainer = () => {
   const clearData = () => {
     setTitle("");
     setImgAsset(null);
-    setCalories("");
+    setCategory("Select Category");
     setPrice("");
     setCalories("");
   };
@@ -149,21 +149,6 @@ const CreateContainer = () => {
   return (
     <div className="min-h-screen w-full flex justify-center items-center">
       <div className="w-[90%] md:w-[75%] border border-gray-200 rounded-lg p-4 flex flex-col justify-center">
-        {fields && (
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className={`w-full p-2 rounded-lg text-center text-lg font-semibold ${
-              alertStatus === "danger"
-                ? "bg-red-400 text-red-800"
-                : "bg-emerald-400 text-emerald-800"
-            }`}
-          >
-            {msg}
-          </motion.p>
-        )}
-
         <div className="w-full py-2 border-b border-gray-300 flex items-center gap-2">
           <div className="w-full py-2 border-b border-gray-300 flex items-center gap-2">
             <MdFastfood className="text-xl text-gray-700" />
@@ -278,6 +263,21 @@ const CreateContainer = () => {
             Save
           </button>
         </div>
+
+        {fields && (
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className={`w-full p-2 rounded-lg text-center text-lg font-semibold mt-2 ${
+              alertStatus === "danger"
+                ? "bg-red-400 text-red-800"
+                : "bg-emerald-400 text-emerald-800"
+            }`}
+          >
+            {msg}
+          </motion.p>
+        )}
       </div>
     </div>
   );
