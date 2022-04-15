@@ -7,9 +7,9 @@ export const saveItem = async (data) =>{
         doc(firestore, "foodItems", `${Date.now()}`), data, {merge: true})
 }
 
-export const getAllFoodItem = async () =>{
+export const getAllFoodItems = async () =>{
     const item = await getDocs(
-        query(collection(firestore, "fooditems"), orderBy("id", "desc"))
+        query(collection(firestore, "foodItems"), orderBy("id", "desc"))
     )
 
     return item.docs.map(doc => doc.data())

@@ -13,38 +13,38 @@ export const heroData = [
 export const categories = [
   {
     id: 1,
-    name: "Chicken",
+    name: "Gà",
     urlParamName: "chicken",
   },
   {
     id: 2,
-    name: "Curry",
+    name: "Cà-ri",
     urlParamName: "curry",
   },
   {
     id: 3,
-    name: "Rice",
+    name: "Cơm",
     urlParamName: "rice",
   },
   {
     id: 4,
-    name: "Fish",
+    name: "Cá",
     urlParamName: "fish",
   },
   {
     id: 5,
-    name: "Fruits",
+    name: "Trái cây",
     urlParamName: "fruits",
   },
   {
     id: 6,
-    name: "Icecreams",
+    name: "Kem tươi",
     urlParamName: "icecreams",
   },
 
   {
     id: 7,
-    name: "Soft Drinks",
+    name: "Nước giải khát",
     urlParamName: "drinks",
   },
 ];

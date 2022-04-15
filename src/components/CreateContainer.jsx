@@ -15,7 +15,7 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import { storage } from "../firebase.config";
-import { getAllFoodItem, saveItem } from "../utils/firebaseFunction";
+import { getAllFoodItems, saveItem } from "../utils/firebaseFunction";
 import { categories } from "../utils/data";
 import { useStateValue } from "../context/StateProvider";
 import { actionType } from "../context/reducer";
@@ -101,6 +101,7 @@ const CreateContainer = () => {
           title: title,
           imageUrl: imgAsset,
           calories: calories,
+          category: category,
           qty: 1,
           price: price,
         };
@@ -108,7 +109,7 @@ const CreateContainer = () => {
         saveItem(data);
         setFields(true);
         setMsg("Data Uploaded Successfully !!");
-        setAletStatus("danger");
+        setAletStatus("success");
         setTimeout(() => {
           setFields(false);
           setIsLoangding(false);
@@ -133,11 +134,11 @@ const CreateContainer = () => {
     setImgAsset(null);
     setCalories("");
     setPrice("");
-    setCalories("Select Catelory");
+    setCalories("");
   };
 
   const fetchData = async () => {
-    await getAllFoodItem.then((data) => {
+    await getAllFoodItems().then((data) => {
       dispatch({
         type: actionType.SET_FOOD_ITEMS,
         foodItems: data,
