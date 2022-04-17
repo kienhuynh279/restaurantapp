@@ -28,7 +28,7 @@ export const categories = [
   },
   {
     id: 4,
-    name: "Cá",
+    name: "Hải sản",
     urlParamName: "fish",
   },
   {
