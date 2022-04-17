@@ -1,9 +1,10 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import HomeContainer from "./HomeContainer";
 import { motion } from "framer-motion";
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 import RowContainer from "./RowContainer";
 import { useStateValue } from "../context/StateProvider";
+import MenuContainer from "./MenuContainer";
 
 const MainContainer = () => {
   const [{ foodItems }, dispatch] = useStateValue();
@@ -49,6 +50,8 @@ const MainContainer = () => {
           data={foodItems?.filter((n) => n.category === "fruits")}
         ></RowContainer>
       </section>
+
+      <MenuContainer />
     </div>
   );
 };

@@ -44,7 +44,7 @@ const Header = () => {
   };
 
   return (
-    <header className="fixed z-50 w-screen p-3 px-4 md:p-6 md:px-16 bg-primary">
+    <header className="fixed z-50 w-screen p-2 px-4 md:p-3 md:px-16 bg-primary bg-gray-50">
       {/* Desktop & Tablet */}
       <div className="hidden md:flex w-full h-full items-center justify-between">
         <Link to={"/"} className="flex items-center gap-2">
@@ -59,9 +59,9 @@ const Header = () => {
             exit={{ opacity: 0, x: 200 }}
             className="flex items-center gap-8"
           >
-            <li className="text-base text-black hover:text-black duration-100 transition-all ease-in-out cursor-pointer ">
+            <Link to={"/"} className="text-base text-black hover:text-black duration-100 transition-all ease-in-out cursor-pointer ">
               Home
-            </li>
+            </Link>
             <li className="text-base text-black hover:text-black duration-100 transition-all ease-in-out cursor-pointer ">
               Menu
             </li>
