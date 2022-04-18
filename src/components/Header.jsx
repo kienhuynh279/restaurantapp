@@ -13,13 +13,13 @@ import { actionType } from "../context/reducer";
 const Header = () => {
   const firebaseAuth = getAuth(app);
   const provider = new GoogleAuthProvider();
-  const [{ user, cartShow }, dispatch] = useStateValue();
+  const [{ user, cartShow, cartItems }, dispatch] = useStateValue();
 
   const [isMenu, setIsMenu] = useState(false);
   const login = async () => {
     if (!user) {
       const {
-        user: { refreshToken ,providerData },
+        user: { refreshToken, providerData },
       } = await signInWithPopup(firebaseAuth, provider);
       dispatch({
         type: actionType.SET_USER,
@@ -46,9 +46,9 @@ const Header = () => {
   const showCart = () => {
     dispatch({
       type: actionType.SET_CART_SHOW,
-      cartShow: !cartShow
-    })
-  }
+      cartShow: !cartShow,
+    });
+  };
 
   return (
     <header className="fixed z-50 w-screen p-2 px-4 md:p-3 md:px-16 bg-primary bg-gray-50">
@@ -66,7 +66,10 @@ const Header = () => {
             exit={{ opacity: 0, x: 200 }}
             className="flex items-center gap-8"
           >
-            <Link to={"/"} className="text-base text-black hover:text-black duration-100 transition-all ease-in-out cursor-pointer ">
+            <Link
+              to={"/"}
+              className="text-base text-black hover:text-black duration-100 transition-all ease-in-out cursor-pointer "
+            >
               Home
             </Link>
             <li className="text-base text-black hover:text-black duration-100 transition-all ease-in-out cursor-pointer ">
@@ -80,11 +83,18 @@ const Header = () => {
             </li>
           </motion.ul>
 
-          <div className="relative flex items-center justify-center" onClick={showCart}>
+          <div
+            className="relative flex items-center justify-center"
+            onClick={showCart}
+          >
             <MdShoppingBasket className="text-black text-2xl cursor-pointer" />
-            <div className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-red-500 flex items-center justify-center">
-              <p className="text-xs text-white font-semibold">2</p>
-            </div>
+            {cartItems && cartItems.length > 0 && (
+              <div className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-red-500 flex items-center justify-center">
+                <p className="text-xs text-white font-semibold">
+                  {cartItems.length}
+                </p>
+              </div>
+            )}
           </div>
 
           <div className="relative">
@@ -102,14 +112,20 @@ const Header = () => {
                 className="w-40 bg-gray-50 shadow-xl rounded-lg flex flex-col absolute top-12 right-0"
               >
                 {user && user.email === "kienhuynh279@gmail.com" && (
-                  <Link to={"/createItem"}>
-                    <p onClick={() => setIsMenu(false)} className="px-4 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-100 transition-all duration-100 ease-in-out text-black text-base">
-                      New Item <MdAdd></MdAdd>
-                    </p>
-                  </Link>
+                    <Link to={"/createItem"}>
+                      <p
+                        onClick={() => setIsMenu(false)}
+                        className="px-4 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-100 transition-all duration-100 ease-in-out text-black text-base"
+                      >
+                        New Item <MdAdd></MdAdd>
+                      </p>
+                    </Link>
                 )}
 
-                <p onClick={logout} className="px-4 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-100 transition-all duration-100 ease-in-out text-black text-base">
+                <p
+                  onClick={logout}
+                  className="px-4 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-100 transition-all duration-100 ease-in-out text-black text-base"
+                >
                   Log out <MdLogout></MdLogout>
                 </p>
               </motion.div>
@@ -120,11 +136,16 @@ const Header = () => {
 
       {/* Mobile */}
       <div className="flex items-center justify-between md:hidden w-full h-full ">
-        <div className="relative flex items-center justify-center" onClick={showCart}>
+        <div
+          className="relative flex items-center justify-center"
+          onClick={showCart}
+        >
           <MdShoppingBasket className="text-black text-2xl cursor-pointer" />
-          <div className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-red-500 flex items-center justify-center">
-            <p className="text-xs text-white font-semibold">2</p>
-          </div>
+          {cartItems && cartItems.length > 0 && (
+            <div className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-red-500 flex items-center justify-center">
+              <p className="text-xs text-white font-semibold">2</p>
+            </div>
+          )}
         </div>
 
         <Link to={"/"} className="flex items-center gap-2">
