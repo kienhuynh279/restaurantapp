@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import React, { useEffect, useState } from "react";
 import { BiMinus, BiPlus } from "react-icons/bi";
-import { useStateValue } from "../context/StateProvider";
 import { actionType } from "../context/reducer";
+import { useStateValue } from "../context/StateProvider";
 
-const CartItem = ({ item }) => {
+const CartItem = ({ item, flag, setFlag }) => {
   const [{ cartItems }, dispatch] = useStateValue();
   const [items, setItems] = useState([]);
   const [qty, setQty] = useState(1);
@@ -23,23 +23,25 @@ const CartItem = ({ item }) => {
       cartItems.map((item) => {
         if (item.id === id) {
           item.qty += 1;
+          setFlag(flag + 1);
         }
       });
       cartDispatch();
     } else {
-        setQty(qty - 1);
+      setQty(qty - 1);
       cartItems.map((item) => {
         if (item.id === id) {
           item.qty -= 1;
+          setFlag(flag + 1);
         }
       });
       cartDispatch();
     }
   };
 
-  useEffect(() =>{
-    setItems(cartItems)
-  }, [qty])
+  useEffect(() => {
+    setItems(cartItems);
+  }, [qty]);
 
   return (
     <div className="w-full p-1 px-2 rounded-lg bg-cartItem flex items-center gap-2">
