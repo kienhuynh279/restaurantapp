@@ -1,22 +1,48 @@
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { motion } from "framer-motion";
 import React from "react";
 import { MdOutlineKeyboardBackspace } from "react-icons/md";
 import { RiRefreshFill } from "react-icons/ri";
-import { BiMinus, BiPlus } from "react-icons/bi";
-
-import { motion } from "framer-motion";
-import { useStateValue } from "../context/StateProvider";
 import { actionType } from "../context/reducer";
+import { useStateValue } from "../context/StateProvider";
+import { app } from "../firebase.config";
 import EmptyCart from "../img/emptyCart.svg";
 import CartItem from "./CartItem";
 
+
 const CartContainer = () => {
   const [{ cartShow, cartItems, user }, dispatch] = useStateValue();
+  const firebaseAuth = getAuth(app);
+  const provider = new GoogleAuthProvider();
 
   const showCart = () => {
     dispatch({
       type: actionType.SET_CART_SHOW,
       cartShow: !cartShow,
     });
+  };
+
+  const login = async () => {
+    if (!user) {
+      const {
+        user: { refreshToken, providerData },
+      } = await signInWithPopup(firebaseAuth, provider);
+      dispatch({
+        type: actionType.SET_USER,
+        user: providerData[0],
+      });
+
+      localStorage.setItem("user", JSON.stringify(providerData[0]));
+    }
+  };
+
+  const clearCart = () => {
+    dispatch({
+      type: actionType.SET_CART_ITEMS,
+      cartItems: [],
+    });
+
+    localStorage.setItem("cartItems", JSON.stringify([]));
   };
 
   return (
@@ -32,6 +58,7 @@ const CartContainer = () => {
         </motion.div>
         <p className="text-lg text-black">Cart</p>
         <motion.p
+        onClick={clearCart}
           whileTap={{ scale: 0.6 }}
           className="flex items-center justify-center gap-2 p-1 my-2 bg-gray-100 rounded-md hover:shadow-sm duration-100 ease-in-out
           transition-all cursor-pointer text-black text-base"
@@ -80,6 +107,7 @@ const CartContainer = () => {
             </motion.button>
               ) : (
                 <motion.button
+                onClick={login}
               whileTap={{ scale: 0.8 }}
               type="button"
               className="w-full p-2 rounded-full bg-yellow-600 text-gray-50 text-lg my-2 hover:shadow-lg"
