@@ -7,21 +7,21 @@ import {
   MdFoodBank,
   MdAttachMoney,
 } from "react-icons/md";
-import Loader from "./Loader";
+import Loader from "../Loader";
 import {
   deleteObject,
   getDownloadURL,
   ref,
   uploadBytesResumable,
 } from "firebase/storage";
-import { storage } from "../firebase.config";
-import { getAllFoodItems, saveItem } from "../utils/firebaseFunction";
-import { categories } from "../utils/data";
-import { useStateValue } from "../context/StateProvider";
-import { actionType } from "../context/reducer";
+import { storage } from "../../firebase.config";
+import { getAllFoodItems, saveItem } from "../../utils/firebaseFunction";
+import { categories } from "../../utils/data";
+import { useStateValue } from "../../context/StateProvider";
+import { actionType } from "../../context/reducer";
 import { v4 as uuidv4 } from 'uuid';
 
-const CreateContainer = () => {
+const EditContainer = (props) => {
   const [title, setTitle] = useState("");
   const [calories, setCalories] = useState("");
   const [price, setPrice] = useState("");
@@ -33,6 +33,10 @@ const CreateContainer = () => {
   const [isLoading, setIsLoangding] = useState(false);
 
   const [{ foodItems }, dispatch] = useStateValue();
+
+  const getFoodById = () => {
+      const food_id = props.match.params.id
+  }
 
   const uploadImage = (e) => {
     setIsLoangding(true);
@@ -284,4 +288,4 @@ const CreateContainer = () => {
   );
 };
 
-export default CreateContainer;
+export default EditContainer;

@@ -2,7 +2,7 @@ import React from 'react'
 import { useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
-import { Header, CreateContainer, MainContainer, TableContainer } from './components'
+import { Header, CreateContainer, MainContainer, TableContainer, EditContainer } from './components'
 import { useStateValue } from './context/StateProvider'
 import { getAllFoodItems, getLimitFoodItem } from './utils/firebaseFunction'
 import { actionType } from './context/reducer'
@@ -43,7 +43,7 @@ const App = () => {
             <Route path='/*' element={<MainContainer />}></Route>
             <Route path='/food' element={<TableContainer />}></Route>
             <Route path='/food/create' element={<CreateContainer />}></Route>
-            <Route path='/food/edit/:id' element={<CreateContainer />}></Route>
+            <Route path='/food/edit/:id' element={<EditContainer />}></Route>
           </Routes>
         </main>
       </div>

@@ -6,10 +6,10 @@ import {
   MdArrowForward,
 } from "react-icons/md";
 import { Link } from "react-router-dom";
-import { useStateValue } from "../context/StateProvider";
+import { useStateValue } from "../../context/StateProvider";
 
 const TableContainer = () => {
-  const [{ foodItems, foodLimit }] = useStateValue();
+  const [{ foodLimit }] = useStateValue();
 
   return (
     <div className="">
@@ -17,7 +17,7 @@ const TableContainer = () => {
         <div className="text-2xl py-2 font-semibold">Food List in App</div>
         <Link to={"/food/create"}>
           <p className="px-4 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-100 transition-all duration-100 ease-in-out text-black text-base">
-            New Item
+            New Food
           </p>
         </Link>
       </div>
