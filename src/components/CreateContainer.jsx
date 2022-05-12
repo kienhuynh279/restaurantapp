@@ -19,6 +19,7 @@ import { getAllFoodItems, saveItem } from "../utils/firebaseFunction";
 import { categories } from "../utils/data";
 import { useStateValue } from "../context/StateProvider";
 import { actionType } from "../context/reducer";
+import { v4 as uuidv4 } from 'uuid';
 
 const CreateContainer = () => {
   const [title, setTitle] = useState("");
@@ -97,7 +98,7 @@ const CreateContainer = () => {
         }, 4000);
       } else {
         const data = {
-          id: `${Date.now}`,
+          id: uuidv4(),
           title: title,
           imageUrl: imgAsset,
           calories: calories,
