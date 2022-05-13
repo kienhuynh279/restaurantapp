@@ -65,7 +65,7 @@ const RowContainer = ({ flag, data, scrollValue }) => {
                 {item?.title}
               </p>
               <p className="mt-1 text-sm text-gray-500">
-                {item?.calories} Calories
+                {item?.calories} năng lượng
               </p>
               <div className="flex items-center gap-8">
                 <p className="text-lg text-headingColor font-semibold">
@@ -78,7 +78,7 @@ const RowContainer = ({ flag, data, scrollValue }) => {
       ) : (
         <div className="w-full flex flex-col items-center gap-8">
           <img className="h-340" src={NotFound} alt="" />
-          <p className="text-xl font-semibold">Item not Available</p>
+          <p className="text-xl font-semibold">Chưa có món ăn nào</p>
         </div>
       )}
     </div>

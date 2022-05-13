@@ -1,4 +1,4 @@
-import { collection, doc, getDocs, limit, orderBy, query, setDoc } from "firebase/firestore";
+import { collection, doc, getDocs, limit, orderBy, query, setDoc, where } from "firebase/firestore";
 import { firestore } from "../firebase.config";
 
 // saving new Item
@@ -18,6 +18,14 @@ export const getAllFoodItems = async () =>{
 export const getLimitFoodItem = async () =>{
     const item = await getDocs(
         query(collection(firestore, "foodItems"), orderBy("id", "desc"), limit(5))
+    )
+
+    return item.docs.map(doc => doc.data())
+}
+    
+export const getFoodById = async (id) =>{
+    const item = await getDocs(
+        query(collection(firestore, "foodItems"), where('id' === id), orderBy("id", "desc"))
     )
 
     return item.docs.map(doc => doc.data())

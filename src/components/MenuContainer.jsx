@@ -19,7 +19,7 @@ const MenuContainer = () => {
             before:-bottom-2 before:left-11 before:bg-gradient-to-tr from-orange-400 to-orange-600 
             transition-all ease-in-out duration-100"
         >
-          Our Hot Dishes
+          Tất cả món ăn
         </p>
 
         <div className="w-full flex items-center justify-start lg:justify-center gap-8 py-6 overflow-x-scroll scrollbar-none">

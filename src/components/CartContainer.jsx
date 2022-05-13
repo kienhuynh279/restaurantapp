@@ -66,14 +66,14 @@ const CartContainer = () => {
         <motion.div whileTap={{ scale: 0.75 }} onClick={showCart}>
           <MdOutlineKeyboardBackspace className="text-3xl text-black" />
         </motion.div>
-        <p className="text-lg text-black">Cart</p>
+        <p className="text-lg text-black">Giỏ hàng</p>
         <motion.p
           onClick={clearCart}
           whileTap={{ scale: 0.6 }}
           className="flex items-center justify-center gap-2 p-1 my-2 bg-gray-100 rounded-md hover:shadow-sm duration-100 ease-in-out
           transition-all cursor-pointer text-black text-base"
         >
-          Clear <RiRefreshFill />
+          Xóa <RiRefreshFill />
         </motion.p>
       </div>
 
@@ -90,19 +90,19 @@ const CartContainer = () => {
           {/* cart total section  */}
           <div className="w-full flex-1 bg-cartTotal rounded-t-[2rem] flex flex-col items-center justify-evenly px-8 py-2">
             <div className="w-full flex items-center justify-between">
-              <p className="text-gray-400 text-lg">Sub Total</p>
+              <p className="text-gray-400 text-lg">Tiền thức ăn</p>
               <p className="text-gray-400 text-lg">$ {tot}</p>
             </div>
 
             <div className="w-full flex items-center justify-between">
-              <p className="text-gray-400 text-lg">Delivery</p>
+              <p className="text-gray-400 text-lg">Phí giao hàng</p>
               <p className="text-gray-400 text-lg">$ 2.5</p>
             </div>
 
             <div className="w-full border-b border-gray-600 my-2"></div>
 
             <div className="w-full flex items-center justify-between">
-              <p className="text-gray-200 text-xl font-semibold">Total</p>
+              <p className="text-gray-200 text-xl font-semibold">Tổng cộng</p>
               <p className="text-gray-200 text-xl font-semibold">$ {tot + 2.5}</p>
             </div>
 
@@ -112,7 +112,7 @@ const CartContainer = () => {
                 type="button"
                 className="w-full p-2 rounded-full bg-yellow-600 text-gray-50 text-lg my-2 hover:shadow-lg"
               >
-                Check Out
+                Đặt ngay !
               </motion.button>
             ) : (
               <motion.button
@@ -121,7 +121,7 @@ const CartContainer = () => {
                 type="button"
                 className="w-full p-2 rounded-full bg-yellow-600 text-gray-50 text-lg my-2 hover:shadow-lg"
               >
-                Log in to Check Out
+                Đăng nhập để đặt hàng
               </motion.button>
             )}
           </div>
@@ -130,7 +130,7 @@ const CartContainer = () => {
         <div className="w-full h-full flex flex-col items-center justify-center gap-6">
           <img src={EmptyCart} className="w-300" alt="emty cart" />
           <p className="text-xl text-black font-semibold">
-            Add Some Items to Cart
+            Thêm món ăn vào giỏ hàng
           </p>
         </div>
       )}

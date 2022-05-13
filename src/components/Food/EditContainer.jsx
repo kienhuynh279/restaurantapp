@@ -15,28 +15,28 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import { storage } from "../../firebase.config";
-import { getAllFoodItems, saveItem } from "../../utils/firebaseFunction";
+import { getAllFoodItems, getFoodById, saveItem } from "../../utils/firebaseFunction";
 import { categories } from "../../utils/data";
 import { useStateValue } from "../../context/StateProvider";
 import { actionType } from "../../context/reducer";
 import { v4 as uuidv4 } from 'uuid';
+import { useParams } from "react-router-dom";
 
 const EditContainer = (props) => {
-  const [title, setTitle] = useState("");
-  const [calories, setCalories] = useState("");
-  const [price, setPrice] = useState("");
-  const [category, setCategory] = useState(null);
-  const [imgAsset, setImgAsset] = useState(null);
-  const [fields, setFields] = useState(false);
-  const [alertStatus, setAletStatus] = useState("danger");
-  const [msg, setMsg] = useState(null);
-  const [isLoading, setIsLoangding] = useState(false);
+    const [title, setTitle] = useState("");
+    const [calories, setCalories] = useState("");
+    const [price, setPrice] = useState("");
+    const [category, setCategory] = useState(null);
+    const [imgAsset, setImgAsset] = useState(null);
+    const [fields, setFields] = useState(false);
+    const [alertStatus, setAletStatus] = useState("danger");
+    const [msg, setMsg] = useState(null);
+    const [isLoading, setIsLoangding] = useState(false);
+    const food_id = useParams();
 
-  const [{ foodItems }, dispatch] = useStateValue();
+    const [{ foodId }, dispatch] = useStateValue();
 
-  const getFoodById = () => {
-      const food_id = props.match.params.id
-  }
+    console.log(food_id.id);
 
   const uploadImage = (e) => {
     setIsLoangding(true);
