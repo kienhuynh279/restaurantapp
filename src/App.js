@@ -2,9 +2,9 @@ import React from 'react'
 import { useEffect } from 'react'
 import { Route, Routes, useParams } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
-import { Header, CreateContainer, MainContainer, TableContainer, EditContainer } from './components'
+import { Header, CreateContainer, MainContainer, TableContainer, EditContainer, IndexCategory, IndexOrder } from './components'
 import { useStateValue } from './context/StateProvider'
-import { getAllFoodItems, getFoodById, getLimitFoodItem } from './utils/firebaseFunction'
+import { getAllFoodItems, getOrderList, getLimitFoodItem } from './utils/firebaseFunction'
 import { actionType } from './context/reducer'
 
 
@@ -19,6 +19,15 @@ const App = () => {
     });
   };
 
+  const getOrderAllList = async () => {
+    await getOrderList().then(data=>{
+      dispatch({
+        type: actionType.GET_ORDER_LIST,
+        orderList: data
+      })
+    })
+  }
+
   const fetchLimitData = async () => {
     await getLimitFoodItem().then((data) => {
       dispatch({
@@ -27,23 +36,11 @@ const App = () => {
       });
     });
   }
-
-  // const fetchFoodId = async () => {
-  //   await getFoodById(id).then((data) => {
-  //     dispatch({
-  //       type: actionType.GET_FOOD_BY_ID,
-  //       foodId: data,
-  //     });
-  //   });
-  // }
-
-  // console.log(id);
-
   
-
   useEffect(() => {
     fetchData();
     fetchLimitData();
+    getOrderAllList();
     // fetchFoodId();
   }, []);
   return (
@@ -56,6 +53,8 @@ const App = () => {
             <Route path='/food' element={<TableContainer />}></Route>
             <Route path='/food/create' element={<CreateContainer />}></Route>
             <Route path='/food/edit/:id' element={<EditContainer />}></Route>
+
+            <Route path='/order' element={<IndexOrder />}></Route>
           </Routes>
         </main>
       </div>

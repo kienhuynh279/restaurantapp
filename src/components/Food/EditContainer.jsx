@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import {
   MdFastfood,
@@ -15,7 +15,7 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import { storage } from "../../firebase.config";
-import { getAllFoodItems, getFoodById, saveItem } from "../../utils/firebaseFunction";
+import { getAllFoodItems, updateFood } from "../../utils/firebaseFunction";
 import { categories } from "../../utils/data";
 import { useStateValue } from "../../context/StateProvider";
 import { actionType } from "../../context/reducer";
@@ -23,21 +23,22 @@ import { v4 as uuidv4 } from 'uuid';
 import { useParams } from "react-router-dom";
 
 const EditContainer = (props) => {
-    const [title, setTitle] = useState("");
-    const [calories, setCalories] = useState("");
-    const [price, setPrice] = useState("");
-    const [category, setCategory] = useState(null);
-    const [imgAsset, setImgAsset] = useState(null);
-    const [fields, setFields] = useState(false);
-    const [alertStatus, setAletStatus] = useState("danger");
-    const [msg, setMsg] = useState(null);
-    const [isLoading, setIsLoangding] = useState(false);
-    const food_id = useParams();
-
-    const [{ foodId }, dispatch] = useStateValue();
-
-    console.log(food_id.id);
-
+  const food_id = useParams();
+  const id = food_id.id;
+  const [{ foodItems }, dispatch] = useStateValue();
+  const foodId = foodItems.filter(item => {
+    return item.id === id
+  })
+  const [title, setTitle] = useState("");
+  const [calories, setCalories] = useState("");
+  const [price, setPrice] = useState("");
+  const [category, setCategory] = useState(null);
+  const [imgAsset, setImgAsset] = useState();
+  const [fields, setFields] = useState(false);
+  const [alertStatus, setAletStatus] = useState("danger");
+  const [msg, setMsg] = useState(null);
+  const [isLoading, setIsLoangding] = useState(false);
+ 
   const uploadImage = (e) => {
     setIsLoangding(true);
     const imageFile = e.target.files[0];
@@ -58,7 +59,7 @@ const EditContainer = (props) => {
         setTimeout(() => {
           setFields(false);
           setIsLoangding(false);
-        }, 4000);
+        }, 2000); 
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadUrl) => {
@@ -69,7 +70,7 @@ const EditContainer = (props) => {
           setAletStatus("success");
           setTimeout(() => {
             setFields(false);
-          }, 4000);
+          }, 2000);
         });
       }
     );
@@ -85,7 +86,7 @@ const EditContainer = (props) => {
       setMsg("Image deleted successfully !!");
       setTimeout(() => {
         setFields(false);
-      }, 4000);
+      }, 2000);
     });
   };
 
@@ -99,7 +100,7 @@ const EditContainer = (props) => {
         setTimeout(() => {
           setFields(false);
           setIsLoangding(false);
-        }, 4000);
+        }, 2000);
       } else {
         const data = {
           id: uuidv4(),
@@ -111,7 +112,7 @@ const EditContainer = (props) => {
           price: price,
         };
 
-        saveItem(data);
+        updateFood(data);
         setFields(true);
         setMsg("Data Uploaded Successfully !!");
         setAletStatus("success");
@@ -119,7 +120,7 @@ const EditContainer = (props) => {
           setFields(false);
           setIsLoangding(false);
           clearData();
-        }, 4000);
+        }, 2000);
       }
     } catch (error) {
       setFields(true);
@@ -128,7 +129,7 @@ const EditContainer = (props) => {
       setTimeout(() => {
         setFields(false);
         setIsLoangding(false);
-      }, 4000);
+      }, 2000);
     }
 
     fetchData();
@@ -141,6 +142,20 @@ const EditContainer = (props) => {
     setPrice("");
     setCalories("");
   };
+
+  const setData = () => {
+    setTitle(foodId[0].title)
+    setCalories(foodId[0].calories)
+    setCategory(foodId[0].category)
+    setImgAsset(foodId[0].imageUrl)
+    setPrice(foodId[0].price)
+  }
+
+  useEffect(() => {
+    setData();
+  }, []);
+
+  
 
   const fetchData = async () => {
     await getAllFoodItems().then((data) => {
@@ -162,7 +177,6 @@ const EditContainer = (props) => {
               required
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              placeholder="Give me a title..."
               className="w-full h-full text-lg bg-transparent outline-none border-none placeholder:text-gray-400 text-textColor"
             />
           </div>

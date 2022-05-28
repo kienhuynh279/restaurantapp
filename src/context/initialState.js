@@ -10,4 +10,5 @@ export const initialState = {
     cartItems: cartInfo,
     foodLimit: null,
     foodId: null,
+    orderList: null
 }

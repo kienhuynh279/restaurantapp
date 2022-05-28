@@ -1,15 +1,39 @@
-import { collection, doc, getDocs, limit, orderBy, query, setDoc, where } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDocs, limit, orderBy, query, setDoc, updateDoc, where } from "firebase/firestore";
 import { firestore } from "../firebase.config";
+
+export const saveOrder = async (data) => {
+    await setDoc(
+        doc(firestore, "orders", `${data.id}`), data, {merge: true}
+    )
+}
 
 // saving new Item
 export const saveItem = async (data) =>{
     await setDoc(
-        doc(firestore, "foodItems", `${Date.now()}`), data, {merge: true})
+        doc(firestore, "foodItems", `${data.title}`), data, {merge: true})
+}
+
+export const updateFood = async (data) =>{
+    const ref = doc(collection(firestore, "foodItems"));
+
+    await updateDoc(ref, data);
+}
+
+export const deleteFood = async (id) => {
+    await deleteDoc(doc(collection(firestore, "foodItems"), id));
 }
 
 export const getAllFoodItems = async () =>{
     const item = await getDocs(
         query(collection(firestore, "foodItems"), orderBy("id", "desc"))
+    )
+
+    return item.docs.map(doc => doc.data())
+}
+
+export const getOrderList = async () => {
+    const item = await getDocs(
+        query(collection(firestore, "orders"))
     )
 
     return item.docs.map(doc => doc.data())

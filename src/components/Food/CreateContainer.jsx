@@ -32,7 +32,7 @@ const CreateContainer = () => {
   const [msg, setMsg] = useState(null);
   const [isLoading, setIsLoangding] = useState(false);
 
-  const [{ foodItems }, dispatch] = useStateValue();
+  const [dispatch] = useStateValue();
 
   const uploadImage = (e) => {
     setIsLoangding(true);

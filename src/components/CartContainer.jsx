@@ -8,14 +8,19 @@ import { useStateValue } from "../context/StateProvider";
 import { app } from "../firebase.config";
 import EmptyCart from "../img/emptyCart.svg";
 import CartItem from "./CartItem";
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
+import { saveOrder } from "../utils/firebaseFunction";
+import { v4 as uuidv4 } from "uuid";
 
 const CartContainer = () => {
   const [{ cartShow, cartItems, user }, dispatch] = useStateValue();
-  const [tot, setTot] = useState(0)
+  const [tot, setTot] = useState(0);
   const [flag, setFlag] = useState(1);
   const firebaseAuth = getAuth(app);
   const provider = new GoogleAuthProvider();
+  const [openModal, setOpenModal] = useState(false);
+  const [phone, setPhone] = useState("");
+  const [address, setAdddress] = useState("");
 
   const showCart = () => {
     dispatch({
@@ -38,6 +43,21 @@ const CartContainer = () => {
     }
   };
 
+  console.log(cartItems);
+
+  const saveItem = () => {
+    const data = {
+      id: uuidv4(),
+      listFood: cartItems.map((item) => item.title),
+      price: 10,
+      address: address,
+      phone: phone,
+    };
+
+    saveOrder(data);
+    setOpenModal(false);
+  };
+
   const clearCart = () => {
     dispatch({
       type: actionType.SET_CART_ITEMS,
@@ -52,7 +72,6 @@ const CartContainer = () => {
       return accumulator + item.qty * item.price;
     }, 0);
     setTot(totalPrice);
-    console.log(tot);
   }, [tot, flag]);
 
   return (
@@ -62,6 +81,54 @@ const CartContainer = () => {
       exit={{ opacity: 0, x: 200 }}
       className="fixed top-0 right-0 w-full md:w-375 h-screen bg-white drop-shadow-md flex flex-col z-[101]"
     >
+      {openModal && (
+        <div className="fixed bg-orange-100 p-2 h-800">
+          <h1 className="  font-medium text-2xl relative">
+            Xác nhận đơn hàng
+            <motion.div
+              whileTap={{ scale: 0.75 }}
+              onClick={() => setOpenModal(false)}
+              className="absolute -top-1 text-3xl right-1 cursor-pointer"
+            >
+              <p>x</p>
+            </motion.div>
+          </h1>
+
+          <h1 className="font-semibold text-xl mt-3">
+            Danh sách các món ăn của bạn gồm:
+          </h1>
+          <ul>
+            {cartItems.map((i) => (
+              <li className="ml-3 text-base font-medium" key={i.id}>
+                {i.title}
+              </li>
+            ))}
+          </ul>
+          <h3 className="font-semibold text-xl my-3">
+            Điền SĐT và địa chỉ giao hàng để hoàn thành xác nhận đơn hàng
+          </h3>
+          <input
+            className="w-full ml-4  text-lg bg-transparent outline-none border-none placeholder:text-gray-400 text-textColor"
+            type="text"
+            placeholder="Nhập số điện thoại...."
+            onChange={(e) => setPhone(e.target.value)}
+          />
+          <input
+            className="w-full ml-4 mt-2 text-lg bg-transparent outline-none border-none placeholder:text-gray-400 text-textColor"
+            type="text"
+            placeholder="Nhập địa chỉ giao hàng...."
+            onChange={(e) => setAdddress(e.target.value)}
+          />
+          <motion.button
+            whileTap={{ scale: 0.8 }}
+            type="button"
+            className="w-full p-2 rounded-full bg-yellow-600 text-gray-50 text-lg my-2 hover:shadow-lg px-4 mt-4"
+            onClick={saveItem}
+          >
+            Đặt ngay !
+          </motion.button>
+        </div>
+      )}
       <div className="w-full flex items-center justify-between p-4 cursor-pointer">
         <motion.div whileTap={{ scale: 0.75 }} onClick={showCart}>
           <MdOutlineKeyboardBackspace className="text-3xl text-black" />
@@ -83,8 +150,14 @@ const CartContainer = () => {
           <div className="w-full h-340 md:h-42 px-6 py-10 flex flex-col gap-3 overflow-y-scroll scrollbar-none">
             {/* cart item  */}
             {cartItems &&
-              cartItems.map((item) => <CartItem key={item.id} item={item} setFlag={setFlag}
-                  flag={flag} />)}
+              cartItems.map((item) => (
+                <CartItem
+                  key={item.id}
+                  item={item}
+                  setFlag={setFlag}
+                  flag={flag}
+                />
+              ))}
           </div>
 
           {/* cart total section  */}
@@ -103,7 +176,9 @@ const CartContainer = () => {
 
             <div className="w-full flex items-center justify-between">
               <p className="text-gray-200 text-xl font-semibold">Tổng cộng</p>
-              <p className="text-gray-200 text-xl font-semibold">$ {tot + 2.5}</p>
+              <p className="text-gray-200 text-xl font-semibold">
+                $ {tot + 2.5}
+              </p>
             </div>
 
             {user ? (
@@ -111,6 +186,7 @@ const CartContainer = () => {
                 whileTap={{ scale: 0.8 }}
                 type="button"
                 className="w-full p-2 rounded-full bg-yellow-600 text-gray-50 text-lg my-2 hover:shadow-lg"
+                onClick={() => setOpenModal(!openModal)}
               >
                 Đặt ngay !
               </motion.button>
