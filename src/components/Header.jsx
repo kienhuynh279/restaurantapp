@@ -71,14 +71,13 @@ const Header = () => {
             >
               Trang chủ
             </Link>
-            <li className="text-base text-black hover:text-black duration-100 transition-all ease-in-out cursor-pointer ">
+            <Link
+                to={"menu"}
+               className="text-base text-black hover:text-black duration-100 transition-all ease-in-out cursor-pointer ">
               Thực đơn
-            </li>
+            </Link>
             <li className="text-base text-black hover:text-black duration-100 transition-all ease-in-out cursor-pointer ">
-              Về chúng tôi
-            </li>
-            <li className="text-base text-black hover:text-black duration-100 transition-all ease-in-out cursor-pointer ">
-              Dịch vụ
+              Đánh giá
             </li>
           </motion.ul>
 

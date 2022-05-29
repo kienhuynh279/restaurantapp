@@ -1,11 +1,8 @@
 import React from "react";
 import {
-  MdModeEditOutline,
-  MdDelete,
   MdArrowBack,
   MdArrowForward,
 } from "react-icons/md";
-import { Link } from "react-router-dom";
 import { useStateValue } from "../../context/StateProvider";
 import { deleteFood } from "../../utils/firebaseFunction";
 
@@ -27,7 +24,7 @@ const IndexOrder = () => {
                 Các món
               </th>
               <th scope="col" className="px-6 py-3">
-                Tổng tiền
+                E-mail
               </th>
               <th scope="col" className="px-6 py-3">
                 Số Điện Thoại
@@ -48,10 +45,10 @@ const IndexOrder = () => {
                     scope="row"
                     className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
                   >
-                    {item.listFood}
+                    {item.listFood.map(i => `${i}    `  )}
                   </th>
                   <th className="px-6">
-                   {item.price}
+                   {item.email}
                   </th>
                   <td className="px-6 py-4 text-gray-600">{item.phone}</td>
                   <td className="px-6 py-4 text-gray-600">{item.address}</td>

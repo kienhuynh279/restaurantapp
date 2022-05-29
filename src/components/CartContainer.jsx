@@ -52,11 +52,14 @@ const CartContainer = () => {
       price: 10,
       address: address,
       phone: phone,
+      email: user.email,
     };
 
     saveOrder(data);
     setOpenModal(false);
+    alert("Đơn hàng của bạn đã được gửi đến đầu bếp !");
   };
+  console.log(user);
 
   const clearCart = () => {
     dispatch({
@@ -125,7 +128,7 @@ const CartContainer = () => {
             className="w-full p-2 rounded-full bg-yellow-600 text-gray-50 text-lg my-2 hover:shadow-lg px-4 mt-4"
             onClick={saveItem}
           >
-            Đặt ngay !
+            Xác nhận
           </motion.button>
         </div>
       )}

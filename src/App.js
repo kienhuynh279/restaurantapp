@@ -2,7 +2,7 @@ import React from 'react'
 import { useEffect } from 'react'
 import { Route, Routes, useParams } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
-import { Header, CreateContainer, MainContainer, TableContainer, EditContainer, IndexCategory, IndexOrder } from './components'
+import { Header, CreateContainer, MainContainer, TableContainer, EditContainer, IndexCategory, IndexOrder, MenuContainer, DeleteFood } from './components'
 import { useStateValue } from './context/StateProvider'
 import { getAllFoodItems, getOrderList, getLimitFoodItem } from './utils/firebaseFunction'
 import { actionType } from './context/reducer'
@@ -51,8 +51,10 @@ const App = () => {
           <Routes>
             <Route path='/*' element={<MainContainer />}></Route>
             <Route path='/food' element={<TableContainer />}></Route>
+            <Route path="/menu" element={<MenuContainer></MenuContainer>}></Route>
             <Route path='/food/create' element={<CreateContainer />}></Route>
             <Route path='/food/edit/:id' element={<EditContainer />}></Route>
+            <Route path='/food/delete/:id' element={<DeleteFood />}></Route>
 
             <Route path='/order' element={<IndexOrder />}></Route>
           </Routes>

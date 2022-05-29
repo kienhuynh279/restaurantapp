@@ -6,6 +6,7 @@ export const actionType = {
     SET_FOOD_LIMIT: 'SET_FOOD_LIMIT',
     GET_FOOD_BY_ID: 'GET_FOOD_BY_ID',
     GET_ORDER_LIST: 'GET_ORDER_LIST',
+    DELETE_FOOD: 'DELETE_FOOD'
 }
 
 const reducer = (state, action) => {
@@ -44,6 +45,11 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 orderList: action.orderList
+            }
+        case actionType.DELETE_FOOD:
+            return {
+                ...state,
+                foodItems: action.foodItems
             }
         default:
             return state;

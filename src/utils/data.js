@@ -4,10 +4,10 @@ import Fi1 from '../img/fi1.png'
 import C3 from '../img/c3.png'
 
 export const heroData = [
-    {id: 1, name: 'Icecream', desc: 'Chocolate & Vanilla', price: '5.25', imgSrc: I1},
-    {id: 2, name: 'Strawberries', desc: 'Fresh Strawberries', price: '10.25', imgSrc: F1},
-    {id: 3, name: 'Chicken Kebab', desc: 'Mixed Kebab P late', price: '8.25', imgSrc: C3},
-    {id: 4, name: 'Fish Kebab', desc: 'Mixed Fish Kebab', price: '5.25', imgSrc: Fi1}
+    {id: 1, name: 'Kem tươi', desc: 'Chocolate & Vanilla', price: '5.25', imgSrc: I1},
+    {id: 2, name: 'Trái cây', desc: 'Dâu tây', price: '10.25', imgSrc: F1},
+    {id: 3, name: 'Gà', desc: 'Gà Thập cẩm', price: '8.25', imgSrc: C3},
+    {id: 4, name: 'Cá', desc: 'Cá Thập cẩm', price: '5.25', imgSrc: Fi1}
 ]
 
 export const categories = [

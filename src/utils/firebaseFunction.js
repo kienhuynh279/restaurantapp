@@ -3,7 +3,7 @@ import { firestore } from "../firebase.config";
 
 export const saveOrder = async (data) => {
     await setDoc(
-        doc(firestore, "orders", `${data.id}`), data, {merge: true}
+        doc(firestore, "orders", `${data.phone}`), data, {merge: true}
     )
 }
 
@@ -20,7 +20,7 @@ export const updateFood = async (data) =>{
 }
 
 export const deleteFood = async (id) => {
-    await deleteDoc(doc(collection(firestore, "foodItems"), id));
+    await deleteDoc(doc(firestore, "foodItems", id));
 }
 
 export const getAllFoodItems = async () =>{

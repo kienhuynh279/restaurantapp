@@ -49,7 +49,7 @@ const CreateContainer = () => {
       (error) => {
         console.log(error);
         setFields(true);
-        setMsg("Error While Uploading : Try Again!!");
+        setMsg("Tải ảnh lên bị lỗi!! Thử lại");
         setAletStatus("danger");
         setTimeout(() => {
           setFields(false);
@@ -61,7 +61,7 @@ const CreateContainer = () => {
           setImgAsset(downloadUrl);
           setIsLoangding(false);
           setFields(true);
-          setMsg("Upload Image Successfully !!");
+          setMsg("Tải ảnh lên thành công !!");
           setAletStatus("success");
           setTimeout(() => {
             setFields(false);
@@ -78,7 +78,7 @@ const CreateContainer = () => {
       setImgAsset(null);
       setIsLoangding(false);
       setFields(true);
-      setMsg("Image deleted successfully !!");
+      setMsg("Xóa ảnh thành công !!");
       setTimeout(() => {
         setFields(false);
       }, 4000);
@@ -90,7 +90,7 @@ const CreateContainer = () => {
     try {
       if (!title || !calories || !imgAsset || !price || !category) {
         setFields(true);
-        setMsg("Error While Uploading : Try Again!!");
+        setMsg("Lưu dữ liệu không thành công!!");
         setAletStatus("danger");
         setTimeout(() => {
           setFields(false);
@@ -109,7 +109,7 @@ const CreateContainer = () => {
 
         saveItem(data);
         setFields(true);
-        setMsg("Data Uploaded Successfully !!");
+        setMsg("Lưu dữ liệu thành công !!");
         setAletStatus("success");
         setTimeout(() => {
           setFields(false);
@@ -119,7 +119,7 @@ const CreateContainer = () => {
       }
     } catch (error) {
       setFields(true);
-      setMsg("Required fields can't be empty !!");
+      setMsg("Vui lòng nhập đầy đủ dữ liệu !!");
       setAletStatus("danger");
       setTimeout(() => {
         setFields(false);
@@ -133,7 +133,7 @@ const CreateContainer = () => {
   const clearData = () => {
     setTitle("");
     setImgAsset(null);
-    setCategory("Select Category");
+    setCategory("Chọn loại thức ăn");
     setPrice("");
     setCalories("");
   };

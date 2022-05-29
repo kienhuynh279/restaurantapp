@@ -54,7 +54,7 @@ const EditContainer = (props) => {
       (error) => {
         console.log(error);
         setFields(true);
-        setMsg("Error While Uploading : Try Again!!");
+        setMsg("Thêm ảnh không thành công!!");
         setAletStatus("danger");
         setTimeout(() => {
           setFields(false);
@@ -66,7 +66,7 @@ const EditContainer = (props) => {
           setImgAsset(downloadUrl);
           setIsLoangding(false);
           setFields(true);
-          setMsg("Upload Image Successfully !!");
+          setMsg("Thêm ảnh thành công !!");
           setAletStatus("success");
           setTimeout(() => {
             setFields(false);
@@ -83,7 +83,7 @@ const EditContainer = (props) => {
       setImgAsset(null);
       setIsLoangding(false);
       setFields(true);
-      setMsg("Image deleted successfully !!");
+      setMsg("Đã xóa ảnh !!");
       setTimeout(() => {
         setFields(false);
       }, 2000);
@@ -95,7 +95,7 @@ const EditContainer = (props) => {
     try {
       if (!title || !calories || !imgAsset || !price || !category) {
         setFields(true);
-        setMsg("Error While Uploading : Try Again!!");
+        setMsg("Lỗi khi sửa!! Vui lòng thử lại");
         setAletStatus("danger");
         setTimeout(() => {
           setFields(false);
@@ -114,7 +114,7 @@ const EditContainer = (props) => {
 
         updateFood(data);
         setFields(true);
-        setMsg("Data Uploaded Successfully !!");
+        setMsg("Sửa dữ liệu thành công !!");
         setAletStatus("success");
         setTimeout(() => {
           setFields(false);
@@ -124,7 +124,7 @@ const EditContainer = (props) => {
       }
     } catch (error) {
       setFields(true);
-      setMsg("Required fields can't be empty !!");
+      setMsg("Nhập đầy đủ các giá trị !!");
       setAletStatus("danger");
       setTimeout(() => {
         setFields(false);
@@ -138,7 +138,7 @@ const EditContainer = (props) => {
   const clearData = () => {
     setTitle("");
     setImgAsset(null);
-    setCategory("Select Category");
+    setCategory("Chọn loại món ăn");
     setPrice("");
     setCalories("");
   };

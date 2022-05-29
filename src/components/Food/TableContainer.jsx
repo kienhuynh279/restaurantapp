@@ -7,11 +7,10 @@ import {
 } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { useStateValue } from "../../context/StateProvider";
-import { deleteFood } from "../../utils/firebaseFunction";
 
 
 const TableContainer = () => {
-  const [{ foodItems }] = useStateValue();
+  const [{ foodLimit }] = useStateValue()
 
   return (
     <div className="">
@@ -48,8 +47,8 @@ const TableContainer = () => {
             </tr>
           </thead>
           <tbody>
-            {foodItems &&
-              foodItems.map((item) => (
+            {foodLimit &&
+              foodLimit.map((item) => (
                 <tr key={item.id} className="bg-cardColor border-b ">
                   <th
                     scope="row"
@@ -74,12 +73,12 @@ const TableContainer = () => {
                     >
                       <MdModeEditOutline></MdModeEditOutline>
                     </Link>
-                    <button
-                      onClick={() => deleteFood(item.id)}
+                    <Link
+                      to={`/food/delete/${item.id}`}
                       className="text-2xl px-4 py-1  bg-red-500 text-white rounded-lg shadow-md"
                     >
                       <MdDelete></MdDelete>
-                    </button>
+                    </Link>
                   </td>
                 </tr>
               ))}
