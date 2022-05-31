@@ -76,9 +76,9 @@ const Header = () => {
                className="text-base text-black hover:text-black duration-100 transition-all ease-in-out cursor-pointer ">
               Thực đơn
             </Link>
-            <li className="text-base text-black hover:text-black duration-100 transition-all ease-in-out cursor-pointer ">
+            <Link to={'contact'} className="text-base text-black hover:text-black duration-100 transition-all ease-in-out cursor-pointer ">
               Đánh giá
-            </li>
+            </Link>
           </motion.ul>
 
           <div

@@ -55,13 +55,13 @@ const IndexOrder = () => {
                   
                   <td className="px-2 py-4 text-right flex">
                     <button
-                    
+                      onClick={() => {alert('Đã gửi mail xác nhận !!')}}
                       className="text-lg px-4 py-1 mr-2 bg-green-500 text-white rounded-lg shadow-md"
                     >
                       Nhận đơn
                     </button>
                     <button
-                      onClick={() => deleteFood(item.id)}
+                      onClick={() => {alert('Đã gửi mail hủy đơn hàng đến khách hàng !!')}}
                       className="text-lg px-4 py-1  bg-red-500 text-white rounded-lg shadow-md"
                     >
                       Hủy Đơn
