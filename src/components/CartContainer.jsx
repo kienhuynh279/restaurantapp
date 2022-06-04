@@ -43,8 +43,6 @@ const CartContainer = () => {
     }
   };
 
-  console.log(cartItems);
-
   const saveItem = () => {
     const data = {
       id: uuidv4(),
@@ -59,7 +57,6 @@ const CartContainer = () => {
     setOpenModal(false);
     alert("Đơn hàng của bạn đã được gửi đến đầu bếp !");
   };
-  console.log(user);
 
   const clearCart = () => {
     dispatch({

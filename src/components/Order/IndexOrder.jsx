@@ -3,12 +3,27 @@ import {
   MdArrowBack,
   MdArrowForward,
 } from "react-icons/md";
+import { actionType } from "../../context/reducer";
 import { useStateValue } from "../../context/StateProvider";
-import { deleteFood } from "../../utils/firebaseFunction";
+import { deleteOrder, getOrderList } from "../../utils/firebaseFunction";
 
 
 const IndexOrder = () => {
-  const [{ orderList }] = useStateValue();
+  const [{ orderList }, dispatch] = useStateValue();
+  const handleCancelOrder = async (phone) => {
+    deleteOrder(phone);
+    await fetchOrder();
+    alert('Đã hủy đơn hàng')
+  }
+
+  const fetchOrder = async () => {
+    await getOrderList().then(data => {
+      dispatch({
+        type: actionType.GET_ORDER_LIST,
+        orderList: data,
+      })
+    })
+  }
 
   return (
     <div className="">
@@ -61,7 +76,7 @@ const IndexOrder = () => {
                       Nhận đơn
                     </button>
                     <button
-                      onClick={() => {alert('Đã gửi mail hủy đơn hàng đến khách hàng !!')}}
+                      onClick={() => handleCancelOrder(item.phone)}
                       className="text-lg px-4 py-1  bg-red-500 text-white rounded-lg shadow-md"
                     >
                       Hủy Đơn
@@ -89,7 +104,6 @@ const IndexOrder = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )}
 
 export default IndexOrder;

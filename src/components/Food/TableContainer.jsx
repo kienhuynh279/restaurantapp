@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+
+import React from "react";
 import {
   MdModeEditOutline,
   MdDelete,
@@ -6,15 +7,29 @@ import {
   MdArrowForward,
 } from "react-icons/md";
 import { Link } from "react-router-dom";
+import { actionType } from "../../context/reducer";
 import { useStateValue } from "../../context/StateProvider";
-import { getAllFoodItems } from "../../utils/firebaseFunction";
+import { deleteFood, getAllFoodItems } from "../../utils/firebaseFunction";
 
 
 const TableContainer = () => {
-  const [{ foodLimit, foodItems }] = useStateValue();
- 
-//  console.log(foodItems);
+  const [{ foodItems }, dispatch] = useStateValue()
 
+  const handleDeleteFood = async (id) => {
+      deleteFood(id);
+      await fetchData();
+      alert("Đã xóa !!");
+  };
+
+  const fetchData = async () => {
+    await getAllFoodItems().then((data) => {
+      dispatch({
+        type: actionType.SET_FOOD_ITEMS,
+        foodItems: data,
+      });
+    });
+  };
+ 
   return (
     <div className="">
       <div className="flex justify-around">
@@ -76,12 +91,12 @@ const TableContainer = () => {
                     >
                       <MdModeEditOutline></MdModeEditOutline>
                     </Link>
-                    <Link
-                      to={`/food/delete/${item.id}`}
+                    <button
+                      onClick={() => handleDeleteFood(item.id)}
                       className="text-2xl px-4 py-1  bg-red-500 text-white rounded-lg shadow-md"
                     >
                       <MdDelete></MdDelete>
-                    </Link>
+                    </button>
                   </td>
                 </tr>
               ))}

@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import NotFound from "../img/NotFound.svg";
 import { useStateValue } from "../context/StateProvider";
 import { actionType } from "../context/reducer";
-
 const RowContainer = ({ flag, data, scrollValue }) => {
   const rowContainer = useRef();
   const [{ cartItems }, dispatch] = useStateValue();
@@ -24,6 +23,18 @@ const RowContainer = ({ flag, data, scrollValue }) => {
   useEffect(() => {
     addToCart();
   }, [items]);
+
+  const handleCartList = (item) => {
+    cartItems.length === 0
+      ? setItems([...cartItems, item])
+      : cartItems.forEach((i) => {
+          if (i.id === item.id) {
+            alert("Sản phẩm này đã có trong giỏ hàng bạn có muốn thêm vào?");
+          } else {
+            setItems([...cartItems, item]);
+          }
+        });
+  };
 
   return (
     <div
@@ -53,17 +64,7 @@ const RowContainer = ({ flag, data, scrollValue }) => {
               </motion.div>
               <motion.div
                 whileTap={{ scale: 0.75 }}
-                onClick={() => {
-                  cartItems.length === 0
-                    ? setItems([...cartItems, item])
-                    : cartItems.forEach((i) => {
-                        if (i.id === item.id) {
-                          alert("Trùng rồi !!!");
-                        } else {
-                          setItems([...cartItems, item]);
-                        }
-                      });
-                }}
+                onClick={() => handleCartList(item)}
                 className="w-8 h-8 rounded-full bg-red-600 flex items-center justify-center cursor-pointer hover:shadow-md -mt-8"
               >
                 <MdShoppingBasket className="text-white" />

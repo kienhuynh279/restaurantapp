@@ -8,7 +8,6 @@ const CartItem = ({ item, flag, setFlag }) => {
   const [{ cartItems }, dispatch] = useStateValue();
   const [items, setItems] = useState([]);
   const [qty, setQty] = useState(1);
-
   const cartDispatch = () => {
     localStorage.setItem("cartItems", JSON.stringify(items));
     dispatch({
@@ -28,7 +27,7 @@ const CartItem = ({ item, flag, setFlag }) => {
       });
       cartDispatch();
     } else {
-      setQty(qty - 1);
+      setQty(qty - 1);  
       cartItems.map((item) => {
         if (item.id === id) {
           item.qty -= 1;
@@ -50,7 +49,6 @@ const CartItem = ({ item, flag, setFlag }) => {
         alt=""
         className="w-20 h-20 max-w-[60px] rounded-full object-contain"
       />
-
       {/* name section */}
       <div className="flex flex-col gap-2">
         <p className="text-base text-gray-50">{item.title}</p>

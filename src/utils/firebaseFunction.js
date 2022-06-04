@@ -31,6 +31,10 @@ export const getAllFoodItems = async () =>{
     return item.docs.map(doc => doc.data())
 }
 
+export const deleteOrder = async (phone) => {
+    await deleteDoc(doc(firestore, "orders", phone))
+}
+
 export const getOrderList = async () => {
     const item = await getDocs(
         query(collection(firestore, "orders"))

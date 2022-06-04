@@ -56,8 +56,6 @@ const App = () => {
             <Route path="/contact" element={<ContactContainer></ContactContainer>}></Route>
             <Route path='/food/create' element={<CreateContainer />}></Route>
             <Route path='/food/edit/:id' element={<EditContainer />}></Route>
-            <Route path='/food/delete/:id' element={<DeleteFood />}></Route>
-
             <Route path='/order' element={<IndexOrder />}></Route>
           </Routes>
         </main>
