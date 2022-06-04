@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   MdModeEditOutline,
   MdDelete,
@@ -7,10 +7,13 @@ import {
 } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { useStateValue } from "../../context/StateProvider";
+import { getAllFoodItems } from "../../utils/firebaseFunction";
 
 
 const TableContainer = () => {
-  const [{ foodLimit }] = useStateValue()
+  const [{ foodLimit, foodItems }] = useStateValue();
+ 
+//  console.log(foodItems);
 
   return (
     <div className="">
@@ -47,8 +50,8 @@ const TableContainer = () => {
             </tr>
           </thead>
           <tbody>
-            {foodLimit &&
-              foodLimit.map((item) => (
+            {foodItems &&
+              foodItems.map((item) => (
                 <tr key={item.id} className="bg-cardColor border-b ">
                   <th
                     scope="row"

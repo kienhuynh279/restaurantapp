@@ -20,6 +20,8 @@ import { categories } from "../../utils/data";
 import { useStateValue } from "../../context/StateProvider";
 import { actionType } from "../../context/reducer";
 import { v4 as uuidv4 } from 'uuid';
+import { useNavigate } from "react-router-dom";
+import { async } from "@firebase/util";
 
 const CreateContainer = () => {
   const [title, setTitle] = useState("");
@@ -33,6 +35,7 @@ const CreateContainer = () => {
   const [isLoading, setIsLoangding] = useState(false);
 
   const [dispatch] = useStateValue();
+  const nevigate = useNavigate()
 
   const uploadImage = (e) => {
     setIsLoangding(true);
@@ -85,7 +88,7 @@ const CreateContainer = () => {
     });
   };
 
-  const saveDetail = () => {
+  const saveDetail = async () => {
     setIsLoangding(true);
     try {
       if (!title || !calories || !imgAsset || !price || !category) {
@@ -95,7 +98,7 @@ const CreateContainer = () => {
         setTimeout(() => {
           setFields(false);
           setIsLoangding(false);
-        }, 4000);
+        }, 2000);
       } else {
         const data = {
           id: uuidv4(),
@@ -107,7 +110,7 @@ const CreateContainer = () => {
           price: price,
         };
 
-        saveItem(data);
+        await saveItem(data);
         setFields(true);
         setMsg("Lưu dữ liệu thành công !!");
         setAletStatus("success");
@@ -116,6 +119,8 @@ const CreateContainer = () => {
           setIsLoangding(false);
           clearData();
         }, 2000);
+
+        nevigate('/food')
       }
     } catch (error) {
       setFields(true);
@@ -200,7 +205,7 @@ const CreateContainer = () => {
                       </p>
                       <input
                         type="file"
-                        name="uploadimage"
+                        name="upload image"
                         accept="image/*"
                         onChange={uploadImage}
                         className="w-0 h-0"

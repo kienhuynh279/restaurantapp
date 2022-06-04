@@ -1,9 +1,14 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useStateValue } from "../../context/StateProvider";
-import { deleteFood } from "../../utils/firebaseFunction";
+import {
+  deleteFood,
+  getAllFoodItems,
+  saveItem,
+} from "../../utils/firebaseFunction";
 import { firestore } from "../../firebase.config";
 import { deleteDoc, doc } from "firebase/firestore";
+import { Navigate } from "react-router-dom";
 
 const DeleteFood = () => {
   const food_id = useParams();
@@ -12,11 +17,16 @@ const DeleteFood = () => {
   const foodId = foodItems.filter((item) => {
     return item.id === id;
   });
+  const navigate = useNavigate();
 
   const handleDelete = async () => {
     const foodRef = doc(firestore, "foodItems", id);
     try {
       await deleteDoc(foodRef);
+
+      alert("Đã xóa !!");
+      await getAllFoodItems();
+      navigate("/food");
     } catch (err) {
       alert("loi c", err);
     }

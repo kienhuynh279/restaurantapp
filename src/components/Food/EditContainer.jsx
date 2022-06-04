@@ -20,14 +20,14 @@ import { categories } from "../../utils/data";
 import { useStateValue } from "../../context/StateProvider";
 import { actionType } from "../../context/reducer";
 import { v4 as uuidv4 } from 'uuid';
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const EditContainer = (props) => {
   const food_id = useParams();
-  const id = food_id.id;
+  const ref_id = food_id.id;
   const [{ foodItems }, dispatch] = useStateValue();
   const foodId = foodItems.filter(item => {
-    return item.id === id
+    return item.id === ref_id
   })
   const [title, setTitle] = useState("");
   const [calories, setCalories] = useState("");
@@ -38,12 +38,14 @@ const EditContainer = (props) => {
   const [alertStatus, setAletStatus] = useState("danger");
   const [msg, setMsg] = useState(null);
   const [isLoading, setIsLoangding] = useState(false);
+  const nevigate = useNavigate()
  
   const uploadImage = (e) => {
     setIsLoangding(true);
     const imageFile = e.target.files[0];
     const storageRef = ref(storage, `image/${Date.now()}-${imageFile.name}`);
     const uploadTask = uploadBytesResumable(storageRef, imageFile);
+   
 
     uploadTask.on(
       "state_change",
@@ -103,7 +105,7 @@ const EditContainer = (props) => {
         }, 2000);
       } else {
         const data = {
-          id: uuidv4(),
+          id: ref_id,
           title: title,
           imageUrl: imgAsset,
           calories: calories,
@@ -121,6 +123,8 @@ const EditContainer = (props) => {
           setIsLoangding(false);
           clearData();
         }, 2000);
+
+        nevigate('/food')
       }
     } catch (error) {
       setFields(true);

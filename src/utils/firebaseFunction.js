@@ -10,13 +10,13 @@ export const saveOrder = async (data) => {
 // saving new Item
 export const saveItem = async (data) =>{
     await setDoc(
-        doc(firestore, "foodItems", `${data.title}`), data, {merge: true})
+        doc(firestore, "foodItems", `${data.id}`), data, {merge: true})
 }
 
 export const updateFood = async (data) =>{
-    const ref = doc(collection(firestore, "foodItems"));
+    const ref = doc(collection(firestore, 'foodItems'), data.id);
 
-    await updateDoc(ref, data);
+    await updateDoc(ref, data)
 }
 
 export const deleteFood = async (id) => {
