@@ -1,48 +1,81 @@
-
-import React from "react";
-import {
-  MdModeEditOutline,
-  MdDelete,
-  MdArrowBack,
-  MdArrowForward,
-} from "react-icons/md";
+import React, { useState, useEffect } from "react";
+import { MdModeEditOutline, MdDelete } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { actionType } from "../../context/reducer";
 import { useStateValue } from "../../context/StateProvider";
 import { deleteFood, getAllFoodItems } from "../../utils/firebaseFunction";
 
-
 const TableContainer = () => {
-  const [{ foodItems }, dispatch] = useStateValue()
+  const [{ foodItems }, dispatch] = useStateValue();
+  const [search, setSearch] = useState("");
+  const [filteredFood, setFilteredFood] = useState([]);
 
   const handleDeleteFood = async (id) => {
-      deleteFood(id);
-      await fetchData();
-      alert("Đã xóa !!");
+    deleteFood(id);
+    alert("Đã xóa !!");
   };
 
-  const fetchData = async () => {
-    await getAllFoodItems().then((data) => {
-      dispatch({
-        type: actionType.SET_FOOD_ITEMS,
-        foodItems: data,
+  useEffect(() => {
+    const fetchData = async () => {
+      await getAllFoodItems().then((data) => {
+        dispatch({
+          type: actionType.SET_FOOD_ITEMS,
+          foodItems: data,
+        });
       });
-    });
-  };
- 
+    };
+
+    fetchData();
+  });
+
+  useEffect(() => {
+    setFilteredFood(
+      foodItems.filter((item) =>
+        item.title.toLowerCase().includes(search.toLowerCase())
+      )
+    );
+  }, [search, foodItems]);
+
   return (
     <div className="">
-      <div className="flex justify-around">
-        <div className="text-2xl py-2 font-semibold">Danh sách các món ăn</div>
-        <Link to={"/food/create"}>
-          <p className="px-4 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-100 transition-all duration-100 ease-in-out text-black text-base">
-            Thêm mới
-          </p>
-        </Link>
+      <div className="flex flex-col">
+        <div className="text-center">
+          <div className="text-2xl py-2 font-semibold">
+            Danh sách các món ăn
+          </div>
+        </div>
+        <div className="flex flex-row mb-6 justify-evenly">
+          <input
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="form-control
+                        block
+                        min-w-6xl
+                        px-3
+                        py-1
+                        text-base
+                        font-normal
+                        text-gray-700
+                        bg-white bg-clip-padding
+                        border border-solid border-gray-300
+                        rounded
+                        transition
+                        ease-in-out
+                        m-0
+                        focus:text-gray-700 focus:bg-white focus:border-orange-500 focus:outline-none"
+            placeholder="Nhập tên món ăn"
+          />
+          <Link to={"/food/create"}>
+            <p className="rounded-md px-4 py-2 flex items-center gap-3 cursor-pointer bg-green-400 hover:bg-green-500 transition-all duration-100 ease-in-out text-black text-base">
+              Thêm mới
+            </p>
+          </Link>
+        </div>
       </div>
-      <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+      <div className="relative shadow-md rounded-lg">
         <table className="w-full text-sm text-left text-gray-500">
-          <thead className="text-xs text-gray-700 uppercase bg-orange-400">
+          <thead className="text-xs text-gray-700 uppercase rounded-md bg-orange-400 ">
             <tr>
               <th scope="col" className="px-6 py-3">
                 Món ăn
@@ -65,8 +98,8 @@ const TableContainer = () => {
             </tr>
           </thead>
           <tbody>
-            {foodItems &&
-              foodItems.map((item) => (
+            {filteredFood &&
+              filteredFood.map((item) => (
                 <tr key={item.id} className="bg-cardColor border-b ">
                   <th
                     scope="row"
@@ -102,22 +135,6 @@ const TableContainer = () => {
               ))}
           </tbody>
         </table>
-
-        <div className="flex py-3 justify-between items-center">
-          <span className="text-sm text-gray-700 ml-6">
-            Hiển thị <span className="font-semibold text-gray-900 ">1</span> đến{" "}
-            <span className="font-semibold text-gray-900">5</span> của{" "}
-            <span className="font-semibold text-gray-900 ">13</span> món
-          </span>
-          <div className="inline-flex mr-6">
-            <button className="inline-flex items-center py-2 px-4 text-sm font-medium text-white bg-gray-800 rounded-l hover:bg-gray-900 ">
-              <MdArrowBack className="mr-2 w-5 h-5"></MdArrowBack> Trang trước
-            </button>
-            <button className="inline-flex items-center py-2 px-4 text-sm font-medium text-white bg-gray-800 rounded-r border-0 border-l border-gray-700 hover:bg-gray-900 ">
-              Trang tiếp<MdArrowForward className="ml-2 w-5 h-5"></MdArrowForward>
-            </button>
-          </div>
-        </div>
       </div>
     </div>
   );
